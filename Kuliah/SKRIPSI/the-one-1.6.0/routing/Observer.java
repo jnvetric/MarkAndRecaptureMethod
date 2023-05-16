@@ -31,6 +31,7 @@ public class Observer {
 //    }
 
     public Observer() {
+        
     }
 
     public String getMarkPrefix() {
@@ -43,7 +44,4 @@ public class Observer {
         }
         return instance;
     }
-    
-    
-    
 }

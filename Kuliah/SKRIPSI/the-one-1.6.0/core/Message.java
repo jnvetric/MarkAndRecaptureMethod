@@ -52,6 +52,8 @@ public class Message implements Comparable<Message> {
         
         //inisisi prefix
         private String prefix;
+        
+        
 	
 	static {
 		reset();
