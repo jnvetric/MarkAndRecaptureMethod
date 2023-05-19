@@ -124,14 +124,15 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
 
         if (thisHost.isRadioActive() == false) {
 //            System.out.println("sampai sini");
-            
+
             return false;
         }
-            
+
         if (m.getPrefix().equals(Observer.getInstance().getMarkPrefix())) {
-            m.addProperty(MSG_MARK_PROPERTY, initialNrofMark); 
+            m.addProperty(MSG_MARK_PROPERTY, initialNrofMark);
             this.markMessage.add(m.getId());
             this.uniqId = this.markMessage.get(0);
+
             //System.out.println("mark Message");
             return true;
         } else {
@@ -278,7 +279,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
         for (Iterator<Message> iterator = messagesCollection.iterator(); iterator.hasNext();) {
             Message msg = iterator.next();
 
-            if (msg.getPrefix().equals(markPrefix) && cekHost.startsWith("Obs")) {
+            if (msg.getPrefix().equals(markPrefix)) {
                 if (msg.getFrom() == host) {
                     int messageTtl = msg.getTtl();
                     if (messageTtl <= 0) {
@@ -309,12 +310,11 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
 
         if (currentTime - lastUpdate >= interval) {
             //System.out.println(currentTime-lastUpdate);
-            if (cekHost.startsWith("Obs")) {
+            if (cekHost.startsWith("Obs") && !markMessage.isEmpty()) {
 
-                for (Iterator<Message> iterator = messagesCollection.iterator(); iterator.hasNext();) {
-                    Message msg = iterator.next();
+                for (Message msg : host.getMessageCollection()){
                     if (msg.getPrefix().equals(markPrefix) && this.uniqId.equals(msg.getId())) {
-                        
+
                         if (host.equals(msg.getFrom())) {
                             Integer nrofMark = (Integer) msg.getProperty(MSG_MARK_PROPERTY);
 
@@ -325,7 +325,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
                                 //                            System.out.println("Interval " + SimClock.getIntTime());
                                 //                            System.out.println("TTL "+ msg.getTtl());
                                 //                            System.out.println("m " + this.markedNode.size());
-                                if (this.markedNode.size() >= 2) {
+                                if (!markedNode.isEmpty()) {
                                     int tempEstimation = (initialNrofMark * this.recaptureNode.size()) / this.markedNode.size();
                                     this.setEstimation(tempEstimation);
                                     System.out.println("Interval " + SimClock.getIntTime());
@@ -337,6 +337,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
                                     System.out.println("");
                                     Map<Double, Integer> innerMap = new HashMap<>();
                                     innerMap.put(currentTime, tempEstimation);
+
                                     if (!estimasi.containsKey(host)) {
                                         estimasi.put(host, innerMap);
                                     } else {
@@ -370,5 +371,10 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     @Override
     public int getEstimation() {
         return estimation;
+    }
+
+    @Override
+    public Map<DTNHost, Map<Double, Integer>> getEstimasi() {
+        return estimasi;
     }
 }
