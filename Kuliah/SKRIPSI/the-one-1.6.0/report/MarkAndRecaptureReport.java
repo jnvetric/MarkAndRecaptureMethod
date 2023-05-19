@@ -21,7 +21,7 @@ import routing.RoutingDecisionEngine;
 
 /**
  *
- * @author aurelius_aria
+ * @author Juan V
  */
 public class MarkAndRecaptureReport extends Report implements UpdateListener {
 
