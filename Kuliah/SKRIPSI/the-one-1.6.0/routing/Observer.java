@@ -18,7 +18,7 @@ public class Observer {
     public static final String  DEFAULT_MARK_PREFIX = "markMessage";
     private static Observer instance;
     
-    private String markPrefix = "markMessage";
+    private String markPrefix = DEFAULT_MARK_PREFIX;
     protected List<DTNHost> observer;
 
 //    public Observer(Settings s) {

@@ -96,6 +96,7 @@ public class DecisionEngineRouter extends ActiveRouter {
 	{
 		DTNHost myHost = getHost();
 		DTNHost otherNode = con.getOtherNode(myHost);
+                DTNHost thisNode = con.getOtherNode(myHost);
 		DecisionEngineRouter otherRouter = (DecisionEngineRouter)otherNode.getRouter();
 		if(con.isUp())
 		{
@@ -145,7 +146,7 @@ public class DecisionEngineRouter extends ActiveRouter {
 			{ 
                            // decider.shouldSendMarkToHost(m, otherNode);
                             
-				if(decider.shouldSendMarkToHost(m, otherNode)){
+				if(decider.shouldSendMarkToHost(m, otherNode, thisNode)){
                                     
                                     outgoingMessages.add(new Tuple<Message,Connection>(m, con));
                                 }
