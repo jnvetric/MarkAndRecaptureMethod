@@ -25,35 +25,30 @@ import routing.RoutingDecisionEngine;
  */
 public class MarkAndRecaptureReport_2 extends Report {
 
-    private static Map<DTNHost, Map<Double, ArrayList<Integer>>> estimasi;
-    private static List<Double> intervalTime;
-    private double lastUpdate = 0;
-    private double updateInterval = 3600;
-
     public MarkAndRecaptureReport_2() {
         super.init();
-
     }
 
     @Override
     public void done() {
         List<DTNHost> observer = SimScenario.getInstance().getObserver();
         for (DTNHost obs : observer) {
-            String obsX;
-            String estPerObs;
+            String obser;
+            String estimasiPerObs;
             MessageRouter mr = obs.getRouter();
             RoutingDecisionEngine de = ((DecisionEngineRouter) mr).getDecisionEngine();
             ObserverNode ob = (ObserverNode) de;
             for (Map.Entry<DTNHost, Map<Double, Integer>> entry : ob.getEstimasi().entrySet()) {
-                obsX = "" + entry.getKey();
+                obser = "" + entry.getKey();
                 Map<Double, Integer> innerMap = entry.getValue();
-                write(obsX);
+                write(obser);
                 for (Map.Entry<Double, Integer> innerEntry : innerMap.entrySet()) {
-                    estPerObs = BigDecimal.valueOf(innerEntry.getKey()) + " : " + innerEntry.getValue();
-                    write(estPerObs);
+                    estimasiPerObs = BigDecimal.valueOf(innerEntry.getKey()) + " : " + innerEntry.getValue();
+                    write(estimasiPerObs);
                 }
             }
         }
+
         super.done();
     }
 
