@@ -25,42 +25,42 @@ import routing.RoutingDecisionEngine;
  */
 public class MarkAndRecaptureReport extends Report implements UpdateListener {
 
-    private static Map<DTNHost, Map<Double, ArrayList<Integer>>> estimasi;
+   private static Map<DTNHost, Map<Double, Integer>> estimasi;
     private static List<Double> intervalTime;
     private double lastUpdate = 0;
-    private double updateInterval = 3600;
+    private double updateInterval= 36000;
 
     public MarkAndRecaptureReport() {
-        estimasi = new HashMap<DTNHost, Map<Double, ArrayList<Integer>>>();
-        intervalTime = new ArrayList<Double>();
+       estimasi = new HashMap<DTNHost, Map<Double, Integer>>();
+        intervalTime = new  ArrayList<Double>();
         lastUpdate = 0;
-        updateInterval = 3600;
+        updateInterval =3600;
     }
 
     @Override
     public void updated(List<DTNHost> hosts) {
-        if (SimClock.getTime() - lastUpdate >= updateInterval) {
-            lastUpdate = SimClock.getTime();
-            intervalTime.add(lastUpdate);
-
-            List<DTNHost> observer = SimScenario.getInstance().getObserver();
-            for (DTNHost obs : observer) {
-                for (DTNHost host : hosts) {
-                    if (obs == host) {
-                        MessageRouter mr = obs.getRouter();
-                        RoutingDecisionEngine de = ((DecisionEngineRouter) mr).getDecisionEngine();
-                        ObserverNode ob = (ObserverNode) de;
-                        Map<Double, ArrayList<Integer>> innerMap = new HashMap<Double, ArrayList<Integer>>();
-                        ArrayList<Integer> listEs = new ArrayList<>();
-
-                        listEs.add(ob.getEstimation());
-
-                        innerMap.put(lastUpdate, listEs);
-                        if (!estimasi.containsKey(obs)) {
-                            estimasi.put(obs, innerMap);
-                        } else {
-                            estimasi.get(obs).put(lastUpdate, listEs);
-                        }
+          if(SimClock.getTime() - lastUpdate >= updateInterval){
+              lastUpdate = SimClock.getTime();
+              intervalTime.add(lastUpdate);
+              
+              List<DTNHost> observer = SimScenario.getInstance().getObserver();
+              for(DTNHost obs : observer){
+                  for(DTNHost host : hosts){
+                      if(obs == host){
+                          MessageRouter mr = obs.getRouter();
+                          RoutingDecisionEngine de = ((DecisionEngineRouter)mr).getDecisionEngine();
+                          ObserverNode ob = (ObserverNode) de;
+                          Map<Double, Integer> innerMap = new HashMap<Double, Integer>();
+                          ArrayList<Integer> listEs = new ArrayList<>();
+                          
+                          int getEstimasi = ob.getEstimation();
+                          
+                          innerMap.put(lastUpdate, getEstimasi);
+                          if(!estimasi.containsKey(obs)){
+                              estimasi.put(obs, innerMap);
+                          } else {
+                              estimasi.get(obs).put(lastUpdate, getEstimasi);
+                          }
 //                          if(!estimasi.containsKey(obs)){
 //                              ArrayList listEstimasi = new ArrayList(); 
 //                              estimasi.put(obs, new HashMap<Double, ArrayList<Integer>>());
@@ -76,28 +76,28 @@ public class MarkAndRecaptureReport extends Report implements UpdateListener {
 //                                  }
 //                              }
 //                          }
-                        //done();
-
-                    }
-                }
+                          //done();
+                          
+                      }
+                  }
 //                  
-            }
-        }
+              }
+          }
     }
-
+    
     @Override
-    public void done() {
-        String obs;
+    public void done(){
+        String obs ;
         String interval;
         String estimasiPerObs;
-        for (Map.Entry<DTNHost, Map<Double, ArrayList<Integer>>> entry : estimasi.entrySet()) {
-            obs = "Observer : " + entry.getKey();
-            Map<Double, ArrayList<Integer>> innerMap = entry.getValue();
-
+        for(Map.Entry<DTNHost, Map<Double,Integer>> entry : estimasi.entrySet()){
+            obs = "" + entry.getKey();
+            Map<Double, Integer> innerMap = entry.getValue();
+            
             write(obs);
-
-            for (Map.Entry<Double, ArrayList<Integer>> innerEntry : innerMap.entrySet()) {
-                estimasiPerObs = BigDecimal.valueOf(innerEntry.getKey()) + " Estimasi: " + innerEntry.getValue();
+            
+            for(Map.Entry<Double, Integer> innerEntry : innerMap.entrySet()){
+                estimasiPerObs = BigDecimal.valueOf(innerEntry.getKey()) + " : " + innerEntry.getValue();
                 write(estimasiPerObs);
             }
         }
@@ -110,8 +110,8 @@ public class MarkAndRecaptureReport extends Report implements UpdateListener {
 //            }
 //            
 //        }
-
-        super.done();
+       
+       super.done();
     }
-
+   
 }

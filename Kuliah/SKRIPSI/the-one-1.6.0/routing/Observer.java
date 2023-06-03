@@ -14,32 +14,28 @@ import java.util.List;
  * @author acer
  */
 public class Observer {
+
     public static final String MARK_PREFIX = "markPrefix";
-    public static final String  DEFAULT_MARK_PREFIX = "markMessage";
+    public static final String DEFAULT_MARK_PREFIX = "markMessage";
     private static Observer instance;
-    
+
     private String markPrefix = DEFAULT_MARK_PREFIX;
     protected List<DTNHost> observer;
 
-//    public Observer(Settings s) {
-//        if (s.contains(MARK_PREFIX)){
-//            this.markPrefix = s.getSetting(MARK_PREFIX);
-//        } else {
-//            this.markPrefix = DEFAULT_MARK_PREFIX;
-//        }
-//        
-//    }
-
     public Observer() {
-        
+
     }
 
     public String getMarkPrefix() {
-        return this.markPrefix;
+        return markPrefix;
+    }
+
+    public void setMarkPrefix(String markPrefix) {
+        this.markPrefix = markPrefix;
     }
 
     public static Observer getInstance() {
-        if (instance == null){
+        if (instance == null) {
             return instance = new Observer();
         }
         return instance;

@@ -50,7 +50,7 @@ public class Message implements Comparable<Message> {
 	/** Application ID of the application that created the message */
 	private String	appID;
         
-        //inisisi prefix
+        //inisiasi prefix
         private String prefix;
         
 	
@@ -376,7 +376,6 @@ public class Message implements Comparable<Message> {
         }
 
         private String initPrefix() {
-            
             if(this.prefix != "markMessage"){
                 if(this.from.toString().startsWith("Obs")){
                     return "markMessage";
