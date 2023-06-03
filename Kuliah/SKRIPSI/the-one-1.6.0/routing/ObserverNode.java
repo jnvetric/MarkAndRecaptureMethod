@@ -10,7 +10,8 @@ import java.util.Map;
 
 /**
  *
- * @author aurelius_aria
+ * @author Juan V
+ * 
  */
 public interface ObserverNode {
     public boolean getObserver();

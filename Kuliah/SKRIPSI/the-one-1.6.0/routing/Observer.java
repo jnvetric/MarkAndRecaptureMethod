@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class Observer {
 
-    public static final String MARK_PREFIX = "markPrefix";
     public static final String DEFAULT_MARK_PREFIX = "markMessage";
     private static Observer instance;
 

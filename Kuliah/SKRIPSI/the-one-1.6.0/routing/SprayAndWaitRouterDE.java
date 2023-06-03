@@ -74,7 +74,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
         }
 
         // this.markPrefix = s.getSetting(MARK_PREFIX);
-        //this.observerNode = false;
+        this.observerNode = false;
         this.mark = 0;
         this.estimation = 0;
     }
@@ -96,7 +96,11 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
 
     @Override
     public void connectionUp(DTNHost thisHost, DTNHost peer) {
-
+        SprayAndWaitRouterDE partner = getOtherDecisionEngine(peer);
+        if(isObserver(peer)){
+            int es = partner.getEstimation();
+            this.estimation = es;
+        }
     }
 
     @Override
@@ -122,13 +126,11 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
 
             return false;
         }
-
         if (m.getPrefix().equals(Observer.getInstance().getMarkPrefix())) {
-//            if nya dipakai hanya untuk run random
-//            if(!this.markMessage.isEmpty()){
-//                return false;
-//                
-//            }
+            if(!this.markMessage.isEmpty()){
+                return false;
+                
+            }
             m.addProperty(MSG_MARK_PROPERTY, initialNrofMark);
             this.markMessage.add(m.getId());
             return true;
@@ -167,9 +169,10 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
 
     @Override
     public boolean shouldSendMessageToHost(Message m, DTNHost otherHost) {
-//        if(isObserver(otherHost)){
-//           return false;
-//       }
+//            if nya dipakai hanya untuk run random
+        if(isObserver(otherHost)){
+           return false;
+       }
         if (m.getTo() == otherHost) {
             return true;
         }
@@ -185,6 +188,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     @Override
     public boolean shouldSendMarkToHost(Message m, DTNHost otherHost, DTNHost thisHost) {
         String cekHost = "" + thisHost;
+//            if nya dipakai hanya untuk run random
         if (isObserver(otherHost)) {
             return false;
         }
@@ -333,13 +337,13 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
                                 if (!markedNode.isEmpty()) {
                                     int tempEstimation = (initialNrofMark * this.recaptureNode.size()) / this.markedNode.size();
                                     this.setEstimation(tempEstimation);
-                                    System.out.println("Interval " + SimClock.getIntTime());
-                                    System.out.println("Node " + host.getName());
-                                    System.out.println("Mark " + initialNrofMark);
-                                    System.out.println("Recapture " + this.recaptureNode.size());
-                                    System.out.println("m " + this.markedNode.size());
-                                    System.out.println("Estimasi " + this.getEstimation());
-                                    System.out.println("");
+//                                    System.out.println("Interval " + SimClock.getIntTime());
+//                                    System.out.println("Node " + host.getName());
+//                                    System.out.println("Mark " + initialNrofMark);
+//                                    System.out.println("Recapture " + this.recaptureNode.size());
+//                                    System.out.println("m " + this.markedNode.size());
+//                                    System.out.println("Estimasi " + this.getEstimation());
+//                                    System.out.println("");
                                     Map<Double, Integer> innerMap = new HashMap<>();
                                     innerMap.put(currentTime, tempEstimation);
                                     if (!estimasi.containsKey(host)) {
