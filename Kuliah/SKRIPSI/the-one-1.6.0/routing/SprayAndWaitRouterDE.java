@@ -41,7 +41,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     protected int initialNrofCopies;
     protected boolean isBinary;
     public int initialNrofMark;
-    public static final int DEFAULT_INTERVAL = 3600;
+    public static final int DEFAULT_INTERVAL = 18000;
     private double lastUpdate = Double.MAX_VALUE;
     protected boolean observerNode;
     //public final String markPrefix;
@@ -73,8 +73,8 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
             interval = DEFAULT_INTERVAL;
         }
 
-        // this.markPrefix = s.getSetting(MARK_PREFIX);
-        this.observerNode = false;
+// this.markPrefix = s.getSetting(MARK_PREFIX);
+//        this.observerNode = false;
         this.mark = 0;
         this.estimation = 0;
     }
@@ -129,7 +129,6 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
         if (m.getPrefix().equals(Observer.getInstance().getMarkPrefix())) {
             if(!this.markMessage.isEmpty()){
                 return false;
-                
             }
             m.addProperty(MSG_MARK_PROPERTY, initialNrofMark);
             this.markMessage.add(m.getId());
@@ -170,9 +169,9 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     @Override
     public boolean shouldSendMessageToHost(Message m, DTNHost otherHost) {
 //            if nya dipakai hanya untuk run random
-        if(isObserver(otherHost)){
-           return false;
-       }
+//        if(isObserver(otherHost)){
+//           return false;
+//       }
         if (m.getTo() == otherHost) {
             return true;
         }
@@ -189,9 +188,9 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     public boolean shouldSendMarkToHost(Message m, DTNHost otherHost, DTNHost thisHost) {
         String cekHost = "" + thisHost;
 //            if nya dipakai hanya untuk run random
-        if (isObserver(otherHost)) {
-            return false;
-        }
+//        if (isObserver(otherHost)) {
+//            return false;
+//        }
         Collection<Message> messages = otherHost.getMessageCollection();
         String markPrefix = Observer.getInstance().getMarkPrefix();
 

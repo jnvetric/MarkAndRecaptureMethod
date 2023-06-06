@@ -14,7 +14,7 @@ import java.util.List;
  * @author acer
  */
 public class Observer {
-
+    public static final String MARK_PREFIX = "markPrefix";
     public static final String DEFAULT_MARK_PREFIX = "markMessage";
     private static Observer instance;
 
@@ -26,11 +26,7 @@ public class Observer {
     }
 
     public String getMarkPrefix() {
-        return markPrefix;
-    }
-
-    public void setMarkPrefix(String markPrefix) {
-        this.markPrefix = markPrefix;
+        return this.markPrefix;
     }
 
     public static Observer getInstance() {
