@@ -41,7 +41,7 @@ public class SprayAndWaitRouterDE implements RoutingDecisionEngine, ObserverNode
     protected int initialNrofCopies;
     protected boolean isBinary;
     public int initialNrofMark;
-    public static final int DEFAULT_INTERVAL = 18000;
+    public static final int DEFAULT_INTERVAL = 3600;
     private double lastUpdate = Double.MAX_VALUE;
     protected boolean observerNode;
     //public final String markPrefix;
