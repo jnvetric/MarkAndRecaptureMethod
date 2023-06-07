@@ -1,0 +1,5 @@
+Scenario.name = SprayAndWait
+Group.router = SprayAndWaitRouter
+SprayAndWaitRouter.nrofCopies = 5
+SprayAndWaitRouter.binaryMode = true
+Events1.hosts = 0, 39 

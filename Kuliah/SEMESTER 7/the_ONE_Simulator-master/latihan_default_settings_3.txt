@@ -1,0 +1,1 @@
+Scenario.endTime = 43200Group.movementModel = RandomWaypointScenario.name = FrekGroup.router = DecisionEngineRouterDecisionEngineRouter.decisionEngine = community.FrequencyConn#Events1.interval = 431, 432MovementModel.worldSize = 1000, 1000Scenario.nrofHostGroups = 1Group.nrofHosts = 100Events1.hosts = 0,99
